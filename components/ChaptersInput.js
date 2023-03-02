@@ -1,12 +1,14 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
-
-const ChaptersInput = ({ chaptersInputDiv, onSetBookChapters, onSetChaptersInputDiv }) => {
-  
-
+import SectionsInput from "./SectionsInput";
+const ChaptersInput = ({
+  bookChapters,
+  onSetBookChapters,
+  sectionsInputDiv,
+  onSetSectionsInputDiv,
+}) => {
   const onAddChapter = (data) => {
-    onSetChaptersInputDiv((previousChapters) => {
-      return [...previousChapters, { id: "id" + new Date().getTime() }];
-    });
+    const chapterId = "id" + new Date().getTime();
+    onSetBookChapters({ id: chapterId, name: "" });
   };
 
   const handleChange = (chapterId, event) => {
@@ -16,8 +18,10 @@ const ChaptersInput = ({ chaptersInputDiv, onSetBookChapters, onSetChaptersInput
 
   return (
     <Fragment>
-      {chaptersInputDiv.map((chapter) => (
+      {bookChapters.map((chapter) => (
         <div key={chapter.id}>
+          <label htmlFor="chapterName">{"Chapter Name: " + chapter.name}</label>
+          <br></br>
           <input
             key={chapter.id}
             placeholder="Chapter Name"
@@ -27,6 +31,11 @@ const ChaptersInput = ({ chaptersInputDiv, onSetBookChapters, onSetChaptersInput
             onChange={handleChange.bind(this, chapter.id)}
           />
           <br></br>
+          <SectionsInput
+            chapterId={chapter.id}
+            sectionsInputDiv={sectionsInputDiv}
+            onSetSectionsInputDiv={onSetSectionsInputDiv.bind(this)}
+          />
         </div>
       ))}
       <br></br>
