@@ -1,9 +1,10 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ChaptersInput from "../components/ChaptersInput";
 const BooksList = () => {
   const refBookTitle = useRef(null);
   const [bookTitle, setBookTitle] = useState("");
   const [bookChapters, setBookChapters] = useState([]);
+  const [chaptersInputDiv, setChaptersInputDiv] = useState([]);
 
   const onSetBookChapters = (newChapter) => {
     setBookChapters((previousChapters) => [
@@ -38,8 +39,16 @@ const BooksList = () => {
 
       <ChaptersInput
         onSetBookChapters={onSetBookChapters.bind(this)}
+        chaptersInputDiv={chaptersInputDiv}
+        onSetChaptersInputDiv={setChaptersInputDiv.bind(this)}
       ></ChaptersInput>
       <button onClick={onAddBook}>Add new book!</button>
+      <div>
+        Show of Chapters created:
+        {bookChapters.map((chapter) => (
+          <div key={chapter.id}>{chapter.name}</div>
+        ))}
+      </div>
     </>
   );
 };

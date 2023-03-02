@@ -1,10 +1,10 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
 
-const ChaptersInput = ({ onSetBookChapters }) => {
-  const [chaptersInputDiv, setChaptersInputDiv] = useState([]);
+const ChaptersInput = ({ chaptersInputDiv, onSetBookChapters, onSetChaptersInputDiv }) => {
+  
 
   const onAddChapter = (data) => {
-    setChaptersInputDiv((previousChapters) => {
+    onSetChaptersInputDiv((previousChapters) => {
       return [...previousChapters, { id: "id" + new Date().getTime() }];
     });
   };

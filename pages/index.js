@@ -20,6 +20,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <Link href="/books">Book List </Link>
+        <Link href="/addbook">Add new book </Link>
       </main>
 
       <footer className={styles.footer}>
