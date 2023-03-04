@@ -15,3 +15,16 @@ export async function getBooks() {
   client.close();
   return books;
 }
+
+export async function getOneBook(bookId) {
+  console.log(bookId);
+  const client = await mongoClient();
+  const db = client.db();
+  const collection = db.collection("books");
+  const book = await collection.findOne({
+    bookId: bookId,
+  });
+  client.close();
+  console.log(book);
+  return book;
+}

@@ -2,17 +2,16 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Book from "../../../components/Book";
 import Error from "next/error";
-import { getBooks } from "../../../utils/mongodb";
+import { getBooks, getOneBook } from "../../../utils/mongodb";
 const BookWithId = (props) => {
   const router = useRouter();
   const bookId = router.query.bookId;
-  const thisBookData = props.books.find((book) => book.id == bookId);
-  if (thisBookData) {
+  if (props.thisBookData) {
     return (
       <Fragment>
         <Book
-          bookTitle={thisBookData.bookTitle}
-          chapters={thisBookData.chapters | null}
+          bookTitle={props.thisBookData.bookTitle}
+          chapters={props.thisBookData.chapters | null}
         />
       </Fragment>
     );
@@ -27,22 +26,31 @@ const BookWithId = (props) => {
   }
 };
 
-export async function getStaticProps() {
+export async function getStaticProps(context) {
   // Not exposed to Client side! you can do secrets with http-async fetching!
 
   // fetch data from an API
-  const books = await getBooks();
+  const book = await getOneBook(context.params.bookId);
+  if (!book) {
+    // TODO this is a bit hacky way but works for now :P
+    return {
+      props: {
+        thisBookData: {},
+      },
+    };
+  }
   return {
     props: {
-      books: books.map((book) => ({
-        id: book.bookId | null,
+      thisBookData: {
+        id: book.bookId,
         bookTitle: book.bookTitle,
-      })),
+        chapters: book.chapters,
+      },
     },
   };
 }
 
-// getStaticPaths is required for dynamic SSG pages
+// getStaticPaths is required for dynamic SSG (static-site-generation) pages
 export async function getStaticPaths() {
   // Get the paths we want to pre-render based on books
   const books = await getBooks();
