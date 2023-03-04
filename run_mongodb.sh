@@ -1,0 +1,1 @@
+docker run --name mongodb -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=anselmos -e MONGO_INITDB_ROOT_PASSWORD=mongoPass mongodb/mongodb-community-server:6.0-ubi8
