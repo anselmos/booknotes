@@ -12,9 +12,6 @@ export async function getBooks() {
   const db = client.db();
   const collection = db.collection("books");
   const books = await collection.find().toArray();
-
-  console.log(books);
-
   client.close();
   return books;
 }

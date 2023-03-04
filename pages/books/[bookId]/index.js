@@ -43,10 +43,21 @@ export async function getStaticProps() {
 }
 
 // getStaticPaths is required for dynamic SSG pages
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  // Get the paths we want to pre-render based on books
+  const books = await getBooks();
+  const paths = books
+    .filter((book) => book.bookId)
+    .map((book) => ({
+      params: { bookId: book.bookId.toString() },
+    }));
+
+  // the hardcoded way:
+  // paths: [{ params: { bookId: "1" } }]
   return {
-    paths: [{ params: { bookId: "1" } }],
+    paths,
     fallback: false, // can also be true or 'blocking'
+    // TODO read about fallback=true!
   };
 }
 export default BookWithId;
