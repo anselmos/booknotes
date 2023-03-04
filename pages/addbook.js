@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import ChaptersInput from "../components/ChaptersInput";
-const BooksList = () => {
+const AddBook = () => {
   const refBookTitle = useRef(null);
   const [bookTitle, setBookTitle] = useState("");
   const [bookChapters, setBookChapters] = useState([]);
@@ -54,4 +54,4 @@ const BooksList = () => {
   );
 };
 
-export default BooksList;
+export default AddBook;
