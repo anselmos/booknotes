@@ -4,11 +4,18 @@ import { useRouter } from "next/router";
 import BookTitle from "./BookTitle";
 import Section from "./Section";
 import Chapter from "./Chapter";
-const Book = ({ bookTitle, chapters }) => {
-
+import Link from "next/link";
+const Book = ({ bookTitle, chapters, inEditMode }) => {
+  const router = useRouter();
+  const bookId = router.query.bookId;
 
   return (
     <Fragment>
+      {inEditMode ? (
+        <></>
+      ) : (
+        <Link href={"/books/" + bookId + "/edit"}>EDIT!</Link>
+      )}
       <BookTitle title={bookTitle} />
       {chapters.map((chapter, chapterId) => (
         <Chapter
