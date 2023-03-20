@@ -1,18 +1,12 @@
-import { mongoClient } from "../../utils/mongodb";
+import { addNewBook } from "../../utils/mongodb";
 
 // POST /api/new-book
 export default async function handle(req, res) {
   if (req.method == "POST") {
     const data = req.body;
-    // const {bookTitle, chapters} = data;
-    const client = await mongoClient();
-    const db = client.db();
-    const collection = db.collection("books");
-    const result = await collection.insertOne(data);
+    console.log("Adding book ", data);
+    const output = await addNewBook(data);
 
-    console.log(result);
-
-    client.close();
-    res.status(201).json({ message: "Book inserted!" });
+    res.status(201).json({ message: "Book inserted!", output: output });
   }
 }

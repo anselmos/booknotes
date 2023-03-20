@@ -4,6 +4,7 @@ import Book from "../../../components/Book";
 import Error from "next/error";
 import { getBooks, getOneBook } from "../../../utils/mongodb";
 const BookWithId = (props) => {
+  console.log(props.thisBookData);
   const router = useRouter();
   const bookId = router.query.bookId;
   if (props.thisBookData) {
@@ -11,7 +12,7 @@ const BookWithId = (props) => {
       <Fragment>
         <Book
           bookTitle={props.thisBookData.bookTitle}
-          chapters={props.thisBookData.chapters | null}
+          chapters={props.thisBookData.chapters}
         />
       </Fragment>
     );
@@ -57,7 +58,10 @@ export async function getStaticPaths() {
   const paths = books
     .filter((book) => book.bookId)
     .map((book) => ({
-      params: { bookId: book.bookId.toString() },
+      params: {
+        bookId: book.bookId.toString(),
+        chapters: book?.chapters?.toString(),
+      },
     }));
 
   // the hardcoded way:

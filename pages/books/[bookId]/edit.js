@@ -14,7 +14,8 @@ const EditBook = () => {
   const bookId = router.query.bookId;
   const thisBookData = loadedBooks.find((book) => book.id == bookId);
   const handleBookTitleChange = () => {
-    console.log("hah");
+    // TODO implement book Title change.
+    console.log("BookTitleChange - not yet implemented.");
   };
   if (thisBookData) {
     return (

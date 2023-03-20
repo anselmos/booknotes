@@ -21,10 +21,10 @@ const Book = ({ bookTitle, chapters, inEditMode }) => {
         chapters.map((chapter, chapterId) => (
           <Chapter
             key={chapterId}
-            title={chapter.title}
+            title={chapter.name}
           >
             <ol>
-              {chapter.sections.map((section, sectionId) => (
+              {chapter.sections?.map((section, sectionId) => (
                 <li
                   type="1"
                   key={sectionId}

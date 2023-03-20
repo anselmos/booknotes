@@ -4,11 +4,12 @@ const SectionsInput = ({
   chapterId,
   sectionsInputDiv,
   onSetSectionsInputDiv,
+  chapter,
+  onSetBookChapters,
 }) => {
   const sectionId =
     "id-chapter-" + chapterId + "-section-" + new Date().getTime();
   const onAddSection = (data) => {
-    console.log(sectionId);
     onSetSectionsInputDiv((previousSections) => {
       return [...previousSections, { id: sectionId, chapterId: chapterId }];
     });
@@ -16,11 +17,24 @@ const SectionsInput = ({
 
   const handleChangeName = (sectionId, event) => {
     let sectionName = event.target?.value;
-    let newSection = { id: sectionId, chapterId: chapterId, name: sectionName };
+    let newSection = { id: sectionId, chapterId: chapterId, text: sectionName };
     onSetSectionsInputDiv((previousSections) => [
       ...previousSections?.filter((section) => section.id !== sectionId),
       newSection,
     ]);
+
+    let existingSections = [];
+    if (chapter.sections !== undefined) {
+      existingSections = chapter.sections;
+    }
+    onSetBookChapters({
+      id: chapter.id,
+      name: chapter.name,
+      sections: [
+        ...existingSections.filter((section) => section.id !== sectionId),
+        newSection,
+      ],
+    });
   };
 
   return (

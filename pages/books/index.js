@@ -10,7 +10,6 @@ const BooksList = (props) => {
   // useEffect(() => {
   // setBooks(dataFetchedFromAPI);
   // })
-  console.log(props.books);
   return (
     <Fragment>
       <ul>
@@ -31,11 +30,13 @@ export async function getStaticProps() {
 
   // fetch data from an API
   const books = await getBooks();
+
   return {
     props: {
       books: books.map((book) => ({
         id: book.bookId | null,
         bookTitle: book.bookTitle,
+        chapters: book.chapters,
       })),
     },
   };

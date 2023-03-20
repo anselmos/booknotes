@@ -1,5 +1,7 @@
+import { Router, useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import ChaptersInput from "../components/ChaptersInput";
+
 const AddBook = () => {
   const refBookTitle = useRef(null);
   const [bookTitle, setBookTitle] = useState("");
@@ -12,11 +14,24 @@ const AddBook = () => {
       newChapter,
     ]);
   };
-  const onAddBook = () => {
-    console.log("Book Title: ", bookTitle);
-    console.log("Book Chapters: ", bookChapters);
-    console.log("Book sectionsInputDiv: ", sectionsInputDiv);
-  };
+  const router = useRouter();
+  async function onAddBook() {
+    const response = await fetch("/api/new-book", {
+      method: "POST",
+      body: JSON.stringify({
+        bookTitle: bookTitle,
+        chapters: bookChapters,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
+    // use replace not to be able to go back
+    router.push("/books");
+  }
   const onBookTitleChange = (event) => {
     setBookTitle(event.target?.value);
   };

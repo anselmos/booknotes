@@ -35,6 +35,8 @@ const ChaptersInput = ({
             chapterId={chapter.id}
             sectionsInputDiv={sectionsInputDiv}
             onSetSectionsInputDiv={onSetSectionsInputDiv.bind(this)}
+            chapter={chapter}
+            onSetBookChapters={onSetBookChapters.bind(this)}
           />
         </div>
       ))}
